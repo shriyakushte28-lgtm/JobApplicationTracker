@@ -1,26 +1,59 @@
-\# Placement Preparation 2026
+# Job Application Tracker
 
+This is a personal project that I am building to learn Spring Boot, MySQL, REST APIs, Git, and GitHub while preparing for placements.
 
+The goal of this project is to create a system where users can keep track of their job applications, companies applied to, application status, and other related information.
 
-This repository contains my preparation material for placements.
+## Technologies Used
 
+* Java
+* Spring Boot
+* Spring Data JPA
+* MySQL
+* Maven
+* Git & GitHub
+* Postman
 
+## Progress So Far
 
-Topics:
+* Created Spring Boot project
+* Connected MySQL database
+* Created User entity
+* Created UserRepository
+* Created UserController
+* Tested APIs using Postman
+* Successfully stored and retrieved data from MySQL
 
-\- DSA
+## APIs Implemented
 
-\- Java
+### User APIs
 
-\- SQL
+* GET /api/users
+* GET /api/users/test
 
-\- DBMS
+## Project Structure
 
-\- Operating System
+JobApplicationTracker
 
-\- Computer Networks
+* backend
 
-\- Aptitude
+  * src
+  * pom.xml
+  * application.properties
 
-\- Projects
+## Why I Built This
 
+I wanted to build a real project instead of only learning concepts. This project helps me practice backend development and understand how different technologies work together in a real application.
+
+## Future Plans
+
+* Add Job entity
+* Add CRUD operations for jobs
+* Track application status
+* Add search and filtering
+* Build a frontend
+* Deploy the application
+
+## Author
+
+Shriya Kushte
