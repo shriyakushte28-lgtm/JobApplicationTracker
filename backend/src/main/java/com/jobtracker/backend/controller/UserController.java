@@ -2,32 +2,59 @@ package com.jobtracker.backend.controller;
 
 import com.jobtracker.backend.model.User;
 import com.jobtracker.backend.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://localhost:5174"
+})
 public class UserController {
 
     private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder =
+            new BCryptPasswordEncoder();
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @PostMapping("/register")
+    public String registerUser(@RequestBody User user) {
+
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            return "Email already exists!";
+        }
+
+        user.setPassword(
+                passwordEncoder.encode(user.getPassword())
+        );
+
+        userRepository.save(user);
+
+        return "User registered successfully!";
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "Controller Working";
-    }
+    @PostMapping("/login")
+    public String loginUser(@RequestBody User user) {
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+        User existingUser =
+                userRepository.findByEmail(user.getEmail());
+
+        if (existingUser == null) {
+            return "User not found!";
+        }
+
+        if (passwordEncoder.matches(
+                user.getPassword(),
+                existingUser.getPassword())) {
+
+            return "Login Successful!";
+        }
+
+        return "Invalid Password!";
     }
 }
