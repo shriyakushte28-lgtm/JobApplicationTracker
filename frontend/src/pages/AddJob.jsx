@@ -32,6 +32,7 @@ const handleSubmit = async () => {
     interviewDate,
     status,
     priority,
+    userEmail: localStorage.getItem("userEmail"),
     jobLink,
     notes,
   };

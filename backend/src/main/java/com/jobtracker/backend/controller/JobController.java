@@ -56,4 +56,11 @@ public class JobController {
 
         return jobRepository.save(job);
     }
+
+    @GetMapping("/user/{email}")
+    public List<Job> getJobsByUser(
+            @PathVariable String email) {
+
+        return jobRepository.findByUserEmail(email);
+    }
 }

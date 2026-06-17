@@ -35,32 +35,11 @@ export const updateJob = async (id, job) => {
   return response.json();
 };
 
-export const registerUser = async (user) => {
+export const getUserJobs = async (email) => {
+
   const response = await fetch(
-    "http://localhost:8080/api/users/register",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    }
+    `http://localhost:8080/api/jobs/user/${email}`
   );
 
-  return response.text();
-};
-
-export const loginUser = async (user) => {
-  const response = await fetch(
-    "http://localhost:8080/api/users/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    }
-  );
-
-  return response.text();
+  return response.json();
 };

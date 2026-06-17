@@ -1,72 +1,72 @@
 import { useState } from "react";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Applications from "./pages/Applications";
 import AddJob from "./pages/AddJob";
 import Dashboard from "./pages/Dashboard";
-import UploadResume from "./pages/UploadResume";
 
 function App() {
 
   const [page, setPage] = useState("applications");
-  const [selectedJob, setSelectedJob] = useState(null);
+
+  const isLoggedIn =
+    localStorage.getItem("isLoggedIn") === "true";
+
+  if (!isLoggedIn) {
+
+    return (
+      <div>
+
+        <button onClick={() => setPage("login")}>
+          Login
+        </button>
+
+        <button onClick={() => setPage("register")}>
+          Register
+        </button>
+
+        <hr />
+
+        {page === "login" && <Login />}
+        {page === "register" && <Register />}
+
+      </div>
+    );
+  }
 
   return (
-  <div className="app-container">
+    <div>
 
-    <div className="sidebar">
+      <button onClick={() => setPage("applications")}>
+        View Jobs
+      </button>
 
-      <h2>Job Tracker</h2>
+      <button onClick={() => setPage("addjob")}>
+        Add Job
+      </button>
 
-      <button
-        className={page === "dashboard" ? "active" : ""}
-        onClick={() => setPage("dashboard")}
-      >
+      <button onClick={() => setPage("dashboard")}>
         Dashboard
       </button>
 
       <button
-        className={page === "applications" ? "active" : ""}
-        onClick={() => setPage("applications")}
+        onClick={() => {
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("userEmail");
+          window.location.reload();
+        }}
       >
-        Applications
+        Logout
       </button>
 
-      <button
-        className={page === "addjob" ? "active" : ""}
-        onClick={() => setPage("addjob")}
-      >
-        Add Job
-      </button>
+      <hr />
 
-      <button onClick={() => setPage("resume")}>
-        Upload Resume
-      </button>
-
-    </div>
-
-    <div className="content">
-
+      {page === "applications" && <Applications />}
+      {page === "addjob" && <AddJob />}
       {page === "dashboard" && <Dashboard />}
 
-      {page === "applications" && (
-        <Applications
-          setPage={setPage}
-          setSelectedJob={setSelectedJob}
-        />
-      )}
-
-      {page === "addjob" && (
-        <AddJob
-          selectedJob={selectedJob}
-          setSelectedJob={setSelectedJob}
-        />
-      )}
-
-      {page === "resume" && <UploadResume />}
-
     </div>
-
-  </div>
-);
+  );
 }
 
 export default App;

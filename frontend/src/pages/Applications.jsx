@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllJobs } from "../services/jobService";
 import { deleteJob } from "../services/jobService";
+import { getUserJobs } from "../services/jobService";
 
 function Applications({ setPage, setSelectedJob }) {
   const [jobs, setJobs] = useState([]);
@@ -17,7 +18,11 @@ function Applications({ setPage, setSelectedJob }) {
   }, []);
 
   const loadJobs = async () => {
-    const data = await getAllJobs();
+    const email =
+      localStorage.getItem("userEmail");
+
+    const data =
+      await getUserJobs(email);
     setJobs(data);
   };
 

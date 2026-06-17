@@ -22,6 +22,8 @@ public class Job {
 
     private String priority;
 
+    private String userEmail;
+
     private String jobLink;
 
     private String notes;
@@ -109,5 +111,13 @@ public class Job {
 
     public void setInterviewDate(String interviewDate) {
         this.interviewDate = interviewDate;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

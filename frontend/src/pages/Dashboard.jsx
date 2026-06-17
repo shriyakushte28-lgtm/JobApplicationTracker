@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllJobs } from "../services/jobService";
+import { getUserJobs } from "../services/jobService";
 import {
   PieChart,
   Pie,
@@ -16,7 +16,11 @@ function Dashboard() {
   }, []);
 
   const loadJobs = async () => {
-    const data = await getAllJobs();
+
+    const email = localStorage.getItem("userEmail");
+
+    const data = await getUserJobs(email);
+
     setJobs(data);
   };
 
@@ -47,6 +51,14 @@ function Dashboard() {
   ).length;
 
   const today = new Date();
+  const interviewsThisWeek = upcomingInterviewJobs.filter((job) => {
+    const interviewDate = new Date(job.interviewDate);
+
+    const diffDays =
+      (interviewDate - today) / (1000 * 60 * 60 * 24);
+
+    return diffDays >= 0 && diffDays <= 7;
+  }).length;
 
   const upcomingInterviewJobs = jobs.filter((job) => {
     if (!job.interviewDate) return false;
@@ -68,6 +80,11 @@ function Dashboard() {
         <div className="card interview-upcoming">
           <h2>{upcomingInterviews}</h2>
           <p>Upcoming Interviews</p>
+        </div>
+
+        <div className="card">
+          <h3>Interviews This Week</h3>
+          <p>{interviewsThisWeek}</p>
         </div>
 
         <div className="card total">
