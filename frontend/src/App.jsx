@@ -2,6 +2,7 @@ import { useState } from "react";
 import Applications from "./pages/Applications";
 import AddJob from "./pages/AddJob";
 import Dashboard from "./pages/Dashboard";
+import UploadResume from "./pages/UploadResume";
 
 function App() {
 
@@ -15,16 +16,29 @@ function App() {
 
       <h2>Job Tracker</h2>
 
-      <button onClick={() => setPage("dashboard")}>
+      <button
+        className={page === "dashboard" ? "active" : ""}
+        onClick={() => setPage("dashboard")}
+      >
         Dashboard
       </button>
 
-      <button onClick={() => setPage("applications")}>
+      <button
+        className={page === "applications" ? "active" : ""}
+        onClick={() => setPage("applications")}
+      >
         Applications
       </button>
 
-      <button onClick={() => setPage("addjob")}>
+      <button
+        className={page === "addjob" ? "active" : ""}
+        onClick={() => setPage("addjob")}
+      >
         Add Job
+      </button>
+
+      <button onClick={() => setPage("resume")}>
+        Upload Resume
       </button>
 
     </div>
@@ -46,6 +60,8 @@ function App() {
           setSelectedJob={setSelectedJob}
         />
       )}
+
+      {page === "resume" && <UploadResume />}
 
     </div>
 

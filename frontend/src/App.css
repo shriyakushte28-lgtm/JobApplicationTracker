@@ -103,7 +103,12 @@ textarea {
   border-radius: 10px;
   min-width: 180px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card h3 {
@@ -140,4 +145,60 @@ textarea {
 .content {
   flex: 1;
   padding: 20px;
+}
+
+.sidebar button {
+  width: 100%;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.sidebar button:hover {
+  transform: translateX(5px);
+}
+
+.sidebar button.active {
+  background-color: #3b82f6;
+  font-weight: bold;
+}
+
+.total {
+  border-left: 6px solid #2563eb;
+}
+
+.applied-card {
+  border-left: 6px solid #3b82f6;
+}
+
+.interview-card {
+  border-left: 6px solid #f59e0b;
+}
+
+.selected-card {
+  border-left: 6px solid #22c55e;
+}
+
+.rejected-card {
+  border-left: 6px solid #ef4444;
+}
+
+.priority {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.priority.high {
+  background-color: #ffcccc;
+  color: #cc0000;
+}
+
+.priority.medium {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.priority.low {
+  background-color: #d4edda;
+  color: #155724;
 }

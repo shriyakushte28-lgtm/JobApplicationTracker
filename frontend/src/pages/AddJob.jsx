@@ -9,6 +9,8 @@ function AddJob({ selectedJob, setSelectedJob }) {
   const [status, setStatus] = useState("");
   const [jobLink, setJobLink] = useState("");
   const [notes, setNotes] = useState("");
+  const [priority, setPriority] = useState("");
+  const [interviewDate, setInterviewDate] = useState("");
 
   useEffect(() => {
     if (selectedJob) {
@@ -27,7 +29,9 @@ const handleSubmit = async () => {
     companyName,
     jobRole,
     applicationDate,
+    interviewDate,
     status,
+    priority,
     jobLink,
     notes,
   };
@@ -88,11 +92,31 @@ const handleSubmit = async () => {
       <br /><br />
 
       <input
+        type="date"
+        value={interviewDate}
+        onChange={(e) => setInterviewDate(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
         type="text"
         placeholder="Status"
         value={status}
         onChange={(e) => setStatus(e.target.value)}
       />
+
+      <br /><br />
+
+      <select
+        value={priority}
+        onChange={(e) => setPriority(e.target.value)}
+      >
+        <option value="">Select Priority</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
 
       <br /><br />
 
