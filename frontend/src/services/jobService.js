@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:8080/api/jobs";
+const API_URL =
+  "https://job-tracker-backend-6d8n.onrender.com/api/jobs";
 
 export const getAllJobs = async () => {
   const response = await fetch(API_URL);
@@ -38,7 +39,7 @@ export const updateJob = async (id, job) => {
 export const getUserJobs = async (email) => {
 
   const response = await fetch(
-    `http://localhost:8080/api/jobs/user/${email}`
+    `https://job-tracker-backend-6d8n.onrender.com/api/jobs/user/${email}`
   );
 
   return response.json();

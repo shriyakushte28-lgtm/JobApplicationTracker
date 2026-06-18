@@ -1,7 +1,7 @@
 export const loginUser = async (user) => {
 
   const response = await fetch(
-    "http://localhost:8080/api/users/login",
+    "https://job-tracker-backend-6d8n.onrender.com/api/users/login",
     {
       method: "POST",
       headers: {
@@ -17,7 +17,7 @@ export const loginUser = async (user) => {
 export const registerUser = async (user) => {
 
   const response = await fetch(
-    "http://localhost:8080/api/users/register",
+    "https://job-tracker-backend-6d8n.onrender.com/api/users/register",
     {
       method: "POST",
       headers: {
