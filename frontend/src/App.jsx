@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Applications from "./pages/Applications";
 import AddJob from "./pages/AddJob";
 import Dashboard from "./pages/Dashboard";
+import ResumePage from "./pages/ResumePage";
 
 function App() {
 
@@ -49,6 +50,10 @@ function App() {
         Dashboard
       </button>
 
+      <button onClick={() => setPage("resume")}>
+        Resumes
+      </button>
+
       <button
         onClick={() => {
           localStorage.removeItem("isLoggedIn");
@@ -64,6 +69,7 @@ function App() {
       {page === "applications" && <Applications />}
       {page === "addjob" && <AddJob />}
       {page === "dashboard" && <Dashboard />}
+      {page === "resume" && <ResumePage />}
 
     </div>
   );
