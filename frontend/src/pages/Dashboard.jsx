@@ -5,7 +5,12 @@ import {
   Pie,
   Cell,
   Tooltip,
-  Legend
+  Legend,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid
 } from "recharts";
 
 function Dashboard() {
@@ -37,6 +42,30 @@ function Dashboard() {
     { name: "Rejected", value: rejected },
   ];
 
+  const highPriority = jobs.filter(
+    job => job.priority === "High"
+  ).length;
+
+  const mediumPriority = jobs.filter(
+    job => job.priority === "Medium"
+  ).length;
+
+  const lowPriority = jobs.filter(
+    job => job.priority === "Low"
+  ).length;
+
+  const priorityData = [
+    { name: "High", value: highPriority },
+    { name: "Medium", value: mediumPriority },
+    { name: "Low", value: lowPriority },
+  ];
+
+  const PRIORITY_COLORS = [
+    "#ef4444",
+    "#f59e0b",
+    "#22c55e",
+  ];
+
   const COLORS = [
     "#3b82f6",
     "#f59e0b",
@@ -51,14 +80,6 @@ function Dashboard() {
   ).length;
 
   const today = new Date();
-  const interviewsThisWeek = upcomingInterviewJobs.filter((job) => {
-    const interviewDate = new Date(job.interviewDate);
-
-    const diffDays =
-      (interviewDate - today) / (1000 * 60 * 60 * 24);
-
-    return diffDays >= 0 && diffDays <= 7;
-  }).length;
 
   const upcomingInterviewJobs = jobs.filter((job) => {
     if (!job.interviewDate) return false;
@@ -70,6 +91,79 @@ function Dashboard() {
       interviewDate >= today
     );
   });
+
+  const interviewsThisWeek = upcomingInterviewJobs.filter((job) => {
+
+    const interviewDate = new Date(job.interviewDate);
+
+    const diffDays =
+      (interviewDate - today) / (1000 * 60 * 60 * 24);
+
+    return diffDays >= 0 && diffDays <= 7;
+
+  }).length;
+
+  const applicationsThisWeek = jobs.filter((job) => {
+
+    if (!job.applicationDate) return false;
+
+    const appDate = new Date(job.applicationDate);
+
+    const diffDays =
+      (today - appDate) / (1000 * 60 * 60 * 24);
+
+    return diffDays >= 0 && diffDays <= 7;
+
+  }).length;
+
+  const applicationsThisMonth = jobs.filter((job) => {
+
+    if (!job.applicationDate) return false;
+
+    const appDate = new Date(job.applicationDate);
+
+    return (
+      appDate.getMonth() === today.getMonth() &&
+      appDate.getFullYear() === today.getFullYear()
+    );
+
+  }).length;
+
+  const successRate =
+    totalJobs > 0
+      ? ((selected / totalJobs) * 100).toFixed(1)
+      : 0;
+
+  const interviewRate =
+    totalJobs > 0
+      ? ((interview / totalJobs) * 100).toFixed(1)
+      : 0;
+
+  const monthlyData = [
+  { month: "Jan", count: 0 },
+  { month: "Feb", count: 0 },
+  { month: "Mar", count: 0 },
+  { month: "Apr", count: 0 },
+  { month: "May", count: 0 },
+  { month: "Jun", count: 0 },
+  { month: "Jul", count: 0 },
+  { month: "Aug", count: 0 },
+  { month: "Sep", count: 0 },
+  { month: "Oct", count: 0 },
+  { month: "Nov", count: 0 },
+  { month: "Dec", count: 0 },
+];
+
+jobs.forEach((job) => {
+
+  if (!job.applicationDate) return;
+
+  const month =
+    new Date(job.applicationDate).getMonth();
+
+  monthlyData[month].count++;
+
+});
 
   return (
     <div>
@@ -112,6 +206,26 @@ function Dashboard() {
           <p>{rejected}</p>
         </div>
 
+        <div className="card">
+          <h3>Applications This Week</h3>
+          <p>{applicationsThisWeek}</p>
+        </div>
+
+        <div className="card">
+          <h3>Applications This Month</h3>
+          <p>{applicationsThisMonth}</p>
+        </div>
+
+        <div className="card">
+          <h3>Success Rate</h3>
+          <p>{successRate}%</p>
+        </div>
+
+        <div className="card">
+          <h3>Interview Rate</h3>
+          <p>{interviewRate}%</p>
+        </div>
+
       </div>
 
       <h2>Application Status Analytics</h2>
@@ -136,6 +250,56 @@ function Dashboard() {
         <Tooltip />
         <Legend />
       </PieChart>
+
+      <h2>Priority Distribution</h2>
+
+      <PieChart width={500} height={300}>
+        <Pie
+          data={priorityData}
+          cx="50%"
+          cy="50%"
+          outerRadius={100}
+          dataKey="value"
+          label
+        >
+          {priorityData.map((entry, index) => (
+            <Cell
+              key={index}
+              fill={
+                PRIORITY_COLORS[
+                  index % PRIORITY_COLORS.length
+                ]
+              }
+            />
+          ))}
+        </Pie>
+
+        <Tooltip />
+        <Legend />
+      </PieChart>
+
+      <h2>Monthly Application Trend</h2>
+
+<BarChart
+  width={700}
+  height={300}
+  data={monthlyData}
+>
+  <CartesianGrid strokeDasharray="3 3" />
+
+  <XAxis dataKey="month" />
+
+  <YAxis />
+
+  <Tooltip />
+
+  <Legend />
+
+  <Bar
+    dataKey="count"
+    name="Applications"
+  />
+</BarChart>
 
       <h2>Upcoming Interviews</h2>
 
