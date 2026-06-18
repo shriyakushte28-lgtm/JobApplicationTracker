@@ -10,7 +10,7 @@ import java.io.IOException;
 @RequestMapping("/api/resume")
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        "http://localhost:5174"
+        "http://localhost:5174", "https://job-application-tracker-livid-chi-80.vercel.app"
 })
 public class ResumeController {
 
